@@ -6,6 +6,7 @@ import com.example.demo.service.UserService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -22,6 +23,9 @@ public class UserServiceImpl implements UserService {
         this.userRepository = userRepository;
     }
 
+    @Autowired
+    public PasswordEncoder passwordEncoder;
+
     @Override
     public UserModel getUserByEmail(String email){
         return userRepository.findByEmail(email);
@@ -33,8 +37,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserModel createUser(String name, String email){
-        UserModel new_user = new UserModel(name, email);
+    public UserModel createUser(String email, String username, String password){
+        String hash_password = passwordEncoder.encode(password);
+        UserModel new_user = new UserModel(email, username, hash_password);
         return userRepository.save(new_user);
     }
 

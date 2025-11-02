@@ -8,7 +8,7 @@ import java.util.Optional;
 public interface UserService {
     UserModel getUserByEmail(String email);
     UserModel getUserByName(String name);
-    UserModel createUser(String name, String email);
+    UserModel createUser(String email, String username, String password);
     UserModel getUserById(String id);
     List<UserModel> getAllUsers();
     UserModel deleteUser(String id);

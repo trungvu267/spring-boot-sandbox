@@ -1,12 +1,12 @@
-package com.example.demo.dto.user;
+package com.example.demo.dto.auth;
 
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter
 @Setter
-public class CreateUserDto {
-    private String name;
+@Getter
+public class RegisterDTO {
     private String email;
     private String password;
+    private String username;
 }

@@ -1,17 +1,19 @@
 package com.example.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+import org.apache.catalina.User;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-@Getter
-@Setter
 @Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @SQLDelete(sql = "UPDATE users SET deleted_at = CURRENT_TIMESTAMP WHERE id=?")
 //@Where(clause = "deleted_at IS NULL")
 @Table(name = "users")
@@ -27,13 +29,16 @@ public class UserModel {
     @Column
     private String email;
 
+    @JsonIgnore
+    @Column
+    private String password;
+
     @Column
     private LocalDateTime deleted_at;
 
-    public UserModel(){}
-    public UserModel(String name, String email){
-        this.name = name;
+    public UserModel(String email, String name, String password){
         this.email = email;
+        this.name = name;
+        this.password = password;
     }
-
 }

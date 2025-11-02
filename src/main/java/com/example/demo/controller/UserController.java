@@ -41,8 +41,9 @@ public class UserController {
     public ResponseEntity<Map<String, Object>> createUser(@RequestBody CreateUserDto req){
         String email = req.getEmail();
         String name = req.getName();
+        String password = req.getPassword();
 
-        UserModel user = userService.createUser(name, email);
+        UserModel user = userService.createUser(email, name, password);
 
         return ResponseEntity.ok(Map.of(
                 "message", "User created successfully",
