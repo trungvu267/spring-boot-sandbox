@@ -1,6 +1,8 @@
 package com.example.demo.config;
 
 import com.example.demo.auth.JwtAuthFilter;
+import com.example.demo.exception.CustomAccessDeniedHandler;
+import com.example.demo.exception.CustomAuthenticationEntryPoint;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -38,7 +40,11 @@ public class SecurityConfig {
                 )
                 // dùng sessionless nếu bạn không dùng form login
                 .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
+                .exceptionHandling(ex -> ex
+                        .authenticationEntryPoint(new CustomAuthenticationEntryPoint())
+                        .accessDeniedHandler(new CustomAccessDeniedHandler())
+                );
                 // bật basic auth tạm để test (sau này thay bằng JWT)
 //                .httpBasic(Customizer.withDefaults());
         return http.build();
