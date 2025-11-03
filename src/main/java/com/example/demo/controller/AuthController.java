@@ -7,6 +7,7 @@ import com.example.demo.dto.auth.AuthResponseDTO;
 import com.example.demo.model.UserModel;
 import com.example.demo.service.AuthService;
 import com.example.demo.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -34,7 +35,7 @@ public class AuthController {
         return ResponseEntity.ok(res);
     }
     @PostMapping("login")
-    public ResponseEntity<AuthResponseDTO> login(@RequestBody LoginDTO loginDTO){
+    public ResponseEntity<AuthResponseDTO> login(@RequestBody @Valid LoginDTO loginDTO){
         String email = loginDTO.getEmail();
         String password = loginDTO.getPassword();
 
